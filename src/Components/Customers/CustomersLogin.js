@@ -27,7 +27,7 @@ function CustomersLogin() {
                     setToken(response.result?.token);
                     navigate("/");
                 } else {
-                    setError("Password Incorect");
+                    setError("Password Incorrect");
                 }
             } else if (response && response === messageError) {
                 setError(response);

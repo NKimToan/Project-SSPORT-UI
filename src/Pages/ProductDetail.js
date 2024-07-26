@@ -9,7 +9,6 @@ import UpdateReviewModal from "../Components/Review/UpdateReviewModal";
 import { getToken } from "../Services/TokenServices/TokenService";
 import { useParams } from "react-router-dom";
 import { Card } from 'react-bootstrap';
-import { domainName } from "../Domain/DomainName";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import GetImageProduct from "../Services/ImageServices/GetImageProduct";
 import GetImageReview from "../Services/ImageServices/GetImageReview";

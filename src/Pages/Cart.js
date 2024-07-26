@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import GetAllCart from "../Services/CartServices/GetAllCart.js"
 import DeleteCart from "../Services/CartServices/DeleteCart.js"
-import { domainName } from "../Domain/DomainName.js"
 import { getToken } from "../Services/TokenServices/TokenService.js";
 import AddInvoiceModal from "../Components/Invoice/AddInvoiceModal.js";
+import GetImageProduct from "../Services/ImageServices/GetImageProduct.js";
 
 function Cart({ userLogin }) {
 
     const [carts, setCarts] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
     const [addModalShow, setAddModalShow] = useState(false);
+    // const [products, setProducts] = useState([]);
     const userLoginId = userLogin ? userLogin.result.customer_id : "";
     document.title = "Cart";
 
@@ -19,10 +20,22 @@ function Cart({ userLogin }) {
         GetAllCart(accessToken)
             .then(data => {
                 setCarts(data.result);
+                data.result.forEach(cart => {
+                    GetImageProduct(cart.product_id.image)
+                        .then(url => {
+                            setCarts(prevCart => prevCart.map(pro =>
+                                pro.product_id === cart.product_id
+                                    ? { ...pro, imageUrl: url }
+                                    : pro
+                            )
+                            );
+                        });
+                })
             })
             .catch(error => console.log(error));
 
     }, [isUpdated])
+    // console.log("Link ảnh: ",cart.imageUrl)
 
     const handleDelete = (e, cartId) => {
         e.preventDefault();
@@ -73,7 +86,7 @@ function Cart({ userLogin }) {
                                             <td >
                                                 <Link to={`/${cart.product_id.category.categoryId}/product/${cart.product_id.productId}`}>
                                                     <img
-                                                        src={`${domainName}/images/products/${cart.product_id.image}`}
+                                                        src={`${cart.imageUrl}`}
                                                         width="70em"
                                                         height="70em"
                                                         alt="" /> {" "}

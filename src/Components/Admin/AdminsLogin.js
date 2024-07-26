@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getToken, setToken } from "../../Services/TokenServices/TokenService";
 import AdminLogin from "../../Services/LoginServices/AdminLogin";
@@ -26,7 +25,7 @@ function AdminsLogin() {
                 setToken(response.result?.token);
                 navigate("/");
             } else {
-                setError("Username/Password not corect");
+                setError("Username/Password not correct");
             }
         } catch (err) {
             console.error('Login failed', err);

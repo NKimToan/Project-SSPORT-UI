@@ -1,1 +1,1 @@
-export const domainName = "http://localhost:8080";
+export const domainName = "https://2e6e-203-210-240-109.ngrok-free.app";
